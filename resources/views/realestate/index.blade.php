@@ -10,6 +10,7 @@ Created at: 2021.03.24.
     <div class="container">
         <div class="jumbotron">
             <h3 class="text-center">Ingatlanok listája</h3>
+
         </div>
     </div>
 @endsection

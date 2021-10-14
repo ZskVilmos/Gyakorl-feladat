@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\real_estate;
 use Validator;
+
 
 class HomeController extends Controller
 {
