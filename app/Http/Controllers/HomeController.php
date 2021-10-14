@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\real_estate;
+use App\Models\real_estate_type;
 use Validator;
 
 
@@ -33,7 +34,8 @@ class HomeController extends Controller
     public function getRealEstate($id)
     {
         $actualRealEstate = real_estate::findOrFail($id);
-        return view('realestate.details', ['actualRealEstate'=>$actualRealEstate]);
+        $actualRealEstateTypeName = real_estate_type::findOrFail($actualRealEstate->type_id);
+        return view('realestate.details', ['actualRealEstate'=>$actualRealEstate, 'actualRealEstateTypeName'=>$actualRealEstateTypeName->name]);
     }
 
     /**

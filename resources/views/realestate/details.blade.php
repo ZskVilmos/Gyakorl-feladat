@@ -17,7 +17,7 @@ Created at: 2021.03.24.
             <h4>Ház neve: {{ $actualRealEstate->name }}</h4>
             <p>Leírás: {{ $actualRealEstate->description }}</p>
             <p>Cím: {{ $actualRealEstate->address }}</p>
-            <p>Ház típusa: {{ $actualRealEstate->type }}</p>
+            <p>Ház típusa: {{ $actualRealEstateTypeName}}</p>
             <p>Feltöltés ideje: {{ $actualRealEstate->created_at }}</p>
             <p>Módosítás ideje: @if($actualRealEstate->updated_at == null)
                                     {{$actualRealEstate->created_at}}
