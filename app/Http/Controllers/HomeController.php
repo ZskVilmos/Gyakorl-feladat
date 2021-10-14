@@ -32,7 +32,8 @@ class HomeController extends Controller
      */
     public function getRealEstate($id)
     {
-        return view('realestate.details');
+        $actualRealEstate = real_estate::findOrFail($id);
+        return view('realestate.details', ['actualRealEstate'=>$actualRealEstate]);
     }
 
     /**
