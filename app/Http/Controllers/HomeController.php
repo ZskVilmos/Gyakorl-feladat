@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\real_estate;
+use App\Models\real_estate;
 use Validator;
 
 
@@ -17,8 +17,11 @@ class HomeController extends Controller
      */
     public function listRealEstate()
     {
-        $realEstatesList = null;
-        return view('realestate.index');
+        $realEstatesList = real_estate::all();
+
+        return view('realestate.index', [
+            'real_estate' => $realEstatesList,
+        ]);
     }
 
     /**

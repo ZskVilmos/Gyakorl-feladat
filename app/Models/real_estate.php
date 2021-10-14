@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class real_estate extends Model
 {
     use HasFactory;
+    protected $table = 'real_estate';
 }
