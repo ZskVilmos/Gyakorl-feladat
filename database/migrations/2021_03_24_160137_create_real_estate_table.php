@@ -22,8 +22,9 @@ class CreateRealEstateTable extends Migration
             $table->double('price');
             $table->unsignedBigInteger('type_id');
             $table->timestamps();
+            $table->softDeletes();
             $table->foreign("type_id")->references("id")
-                ->on("real_estate_type")->onDelete("cascade");
+                ->on("real_estate_type");
         });
 
         DB::statement("

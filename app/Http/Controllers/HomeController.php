@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Faker\Provider\Image;
 use Illuminate\Http\Request;
 use App\Models\real_estate;
 use App\Models\real_estate_type;
 use Dotenv\Validator;
 use Illuminate\Support\Facades\Redirect;
+use Symfony\Component\Console\Input\Input;
 
 #use Validator;
 
@@ -14,6 +16,74 @@ use Illuminate\Support\Facades\Redirect;
 
 class HomeController extends Controller
 {
+    /**
+     * Új ház feltöltő felület
+     * Azonosító, teljes cím, ár, ingatlan jelleg
+     * eloqent modell!
+     * https://laravel.com/docs/8.x/eloquent
+     */
+    public function createRealEstateMenu()
+    {
+
+        $realEstateTypeOptions = real_estate_type::all();
+        return view('realestate.create',[
+            'realEstateTypeOptions' => $realEstateTypeOptions
+        ]);
+    }
+
+    /**
+     * Új ház feltöltése
+     * Azonosító, teljes cím, ár, ingatlan jelleg
+     * eloqent modell!
+     * https://laravel.com/docs/8.x/eloquent
+     */
+    public function createRealEstate(Request $request)
+    {
+        $validatedData = $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'address' => 'required',
+            'type_name' => 'required',
+            'price' => 'required',
+        ]);
+
+
+        $filename = $_FILES['file']['name'];
+        $location = "images/".$filename;
+
+       /* $image = Input::file('img');
+        $filename = time() . '.' . $image->getClientOriginalExtension();
+        $path = public_path('images/' . $filename);
+        Image::make($image->getRealPath())->save($path); //resize(400, 400)->*/
+        //$user->image = $filename;
+        //$user->save();
+
+
+        $name = $validatedData["name"];
+        $description = $validatedData["description"];
+        $address = $validatedData["address"];
+        $type_name = $validatedData["type_name"];
+        $price = $validatedData["price"];
+
+        // real_estate
+        $find_type_id = real_estate_type::where('name', $type_name)->firstOrFail();
+
+        $actualReal_estate = new real_estate();
+        $actualReal_estate->name = $name;
+        $actualReal_estate->description = $description;
+        $actualReal_estate->address = $address;
+        $actualReal_estate->type_id = $find_type_id->id;
+        $actualReal_estate->price = floatval($price);
+        $actualReal_estate->img_uri = $filename;
+        $actualReal_estate->save();
+        if(move_uploaded_file($_FILES['file']['tmp_name'], $location)){
+            return redirect()->back()->with('success', 'Sikeres feltöltés!');
+        } else {
+            return redirect()->back()->with('success', 'Sikertelen feltöltés!');
+        }
+    }
+
+
     /**
      * Adja vissza az ingatlanok listáját
      * Azonosító, teljes cím, ár, ingatlan jelleg
@@ -105,13 +175,13 @@ class HomeController extends Controller
 
 
         if($validatedData){
-
             return redirect()->back()->with('success', 'Sikeres módosítás!');
-
         } else {
+            return redirect()->back()->with('success', 'Sikertelen módosítás!');
+        }
 
             //return Redirect::back()->withErrors(['msg' => 'The Message']);
-        }
+
 
         //return view('realestate.details', ['actualRealEstate'=>$actualRealEstate, 'actualRealEstateTypeName'=>$actualRealEstateTypeName->name]);
 
@@ -128,6 +198,12 @@ class HomeController extends Controller
      */
     public function deleteRealEstate($id)
     {
-
+        $actual_Real_estate = real_estate::findOrFail($id);
+        $actual_Real_estate->delete($id);
+        if($actual_Real_estate){
+            return redirect('/')->with('success', 'Sikeres módosítás!');
+        } else {
+            return redirect('/')->with('success', 'Sikertelen módosítás!');
+        }
     }
 }

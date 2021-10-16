@@ -13,12 +13,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// itt jelennek meg a feltöltött házak
 Route::get('/', [App\Http\Controllers\HomeController::class, 'listRealEstate'] );
 
+// készítés menűje
+Route::get('/create-real-estate', [App\Http\Controllers\HomeController::class, 'createRealEstateMenu'] );
+
+// új ház feltöltése
+Route::POST('/creating-real-estate', [App\Http\Controllers\HomeController::class, 'createRealEstate'] );
+
+// itt nézhetjük meg az eggyes házak részleteit
 Route::get('/get-real-estate/{id}', [App\Http\Controllers\HomeController::class, 'getRealEstate'] );
 
+// az aktuális ház adatait itt lehet átírni
 Route::get('/update-real-estate/{id}', [App\Http\Controllers\HomeController::class, 'updateRealEstateMenu'] );
 
+// az aktuális ház átírt adatait itt tölti fel az adatbázisban
 Route::post('/update-real-estate', [App\Http\Controllers\HomeController::class, 'updateRealEstate'] );
 
+// ezzel lehet törölni az aktuális házat
 Route::get('/delete-real-estate/{id}', [App\Http\Controllers\HomeController::class, 'deleteRealEstate'] );

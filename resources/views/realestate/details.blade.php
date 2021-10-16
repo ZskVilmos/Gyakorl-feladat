@@ -13,7 +13,6 @@ Created at: 2021.03.24.
             <h3 class="text-center">Ingatlan részletek</h3>
             <form action="/update-real-estate/{{$actualRealEstate->id}}" method="GET">
                 @csrf
-                {{ $type_name = $actualRealEstateTypeName}}
                 <h4>Ház neve: {{ $actualRealEstate->name }}</h4>
                 <p>Leírás: {{ $actualRealEstate->description }}</p>
                 <p>Cím: {{ $actualRealEstate->address }}</p>
@@ -27,6 +26,10 @@ Created at: 2021.03.24.
                 <p>Ár {{intval($actualRealEstate->price)}} ft</p>
 
                 <input type="submit" value="Módosítás">
+            </form>
+            <form action="/elete-real-estate/{{$actualRealEstate->id}}" method="GET">
+                @csrf
+                <input type="submit" value="Törlés">
             </form>
         </div>
     </div>
