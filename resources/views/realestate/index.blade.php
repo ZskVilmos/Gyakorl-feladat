@@ -24,7 +24,11 @@ Created at: 2021.03.24.
                         <div class="input-group">
                             <select class="form-control input-group-addon" name="type_id">
                                 @foreach($real_estate_type as $realEstateType)
-                                    <option value="{{$realEstateType->id}}"> {{$realEstateType->name}} </option>
+                                    @if($realEstateType["id"] == $selected_type_id)
+                                        <option value="{{$realEstateType->id}}" selected> {{$realEstateType->name}} </option>
+                                    @else
+                                        <option value="{{$realEstateType->id}}"> {{$realEstateType->name}} </option>
+                                    @endif
                                 @endforeach
                             </select>
                             <input class="input-group-addon btn btn-primary" type="submit" value="Ingatlan típus kiválasztása">
