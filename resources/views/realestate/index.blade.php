@@ -11,7 +11,7 @@ Created at: 2021.03.24.
         <div class="jumbotron">
             <h3 class="text-center">Ingatlanok listája</h3>
             <form class="form-group" action="/create-real-estate" method="GET">
-                <input class="btn btn-primary ml-3" type="submit"  value="Feltöltés">
+                <input class="btn btn-primary ml-3" type="submit"  value="Új ingatlan Feltöltése">
             </form>
             @if (\Session::has('success'))
                 <div class="alert alert-success">

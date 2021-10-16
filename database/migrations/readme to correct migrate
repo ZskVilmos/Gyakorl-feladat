@@ -1,0 +1,6 @@
+A külső kulcs miatt a php artisan migrate nem fog működni, mert elösször azt a táblát migrálja,
+amelyiknek kellene a következő tábla "id"-je, ezért ebben a sorrendben kell egyesével migrálni:
+1. -> php artisan migrate --path=/database/migrations/2021_10_14_143838_real_estate_type.php
+2. -> php artisan migrate --path=/database/migrations/2021_03_24_160137_create_real_estate_table.php
+
+Ezután működni fog, és ráadásul péda adatokkal is feltölti (amit ugye úgy kaptam)

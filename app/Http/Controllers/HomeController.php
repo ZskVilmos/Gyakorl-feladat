@@ -41,45 +41,49 @@ class HomeController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'required',
-            'description' => 'required',
+            'description' => 'required|max:500',
             'address' => 'required',
             'type_name' => 'required',
+            'file' => 'required',
             'price' => 'required',
         ]);
 
+        if($validatedData){
+            $filename = $_FILES['file']['name'];
+            $location = "images/".$filename;
 
-        $filename = $_FILES['file']['name'];
-        $location = "images/".$filename;
-
-       /* $image = Input::file('img');
-        $filename = time() . '.' . $image->getClientOriginalExtension();
-        $path = public_path('images/' . $filename);
-        Image::make($image->getRealPath())->save($path); //resize(400, 400)->*/
-        //$user->image = $filename;
-        //$user->save();
+            /* $image = Input::file('img');
+             $filename = time() . '.' . $image->getClientOriginalExtension();
+             $path = public_path('images/' . $filename);
+             Image::make($image->getRealPath())->save($path); //resize(400, 400)->*/
+            //$user->image = $filename;
+            //$user->save();
 
 
-        $name = $validatedData["name"];
-        $description = $validatedData["description"];
-        $address = $validatedData["address"];
-        $type_name = $validatedData["type_name"];
-        $price = $validatedData["price"];
+            $name = $validatedData["name"];
+            $description = $validatedData["description"];
+            $address = $validatedData["address"];
+            $type_name = $validatedData["type_name"];
+            $price = $validatedData["price"];
 
-        // real_estate
-        $find_type_id = real_estate_type::where('name', $type_name)->firstOrFail();
+            // real_estate
+            $find_type_id = real_estate_type::where('name', $type_name)->firstOrFail();
 
-        $actualReal_estate = new real_estate();
-        $actualReal_estate->name = $name;
-        $actualReal_estate->description = $description;
-        $actualReal_estate->address = $address;
-        $actualReal_estate->type_id = $find_type_id->id;
-        $actualReal_estate->price = floatval($price);
-        $actualReal_estate->img_uri = $filename;
-        $actualReal_estate->save();
-        if(move_uploaded_file($_FILES['file']['tmp_name'], $location)){
-            return redirect()->back()->with('success', 'Sikeres feltöltés!');
+            $actualReal_estate = new real_estate();
+            $actualReal_estate->name = $name;
+            $actualReal_estate->description = $description;
+            $actualReal_estate->address = $address;
+            $actualReal_estate->type_id = $find_type_id->id;
+            $actualReal_estate->price = floatval($price);
+            $actualReal_estate->img_uri = $filename;
+            $actualReal_estate->save();
+            if(move_uploaded_file($_FILES['file']['tmp_name'], $location)){
+                return redirect()->back()->with('success', 'Sikeres feltöltés!');
+            } else {
+                return redirect()->back()->with('alert', 'Sikertelen feltöltés!');
+            }
         } else {
-            return redirect()->back()->with('success', 'Sikertelen feltöltés!');
+            return redirect()->back()->with('alert', 'Sikertelen feltöltés!');
         }
     }
 
@@ -139,58 +143,47 @@ class HomeController extends Controller
      */
     public function updateRealEstate(Request $request)
     {
+        // adatok validálása, eredetileg az adatbázisban 500 ra van korlátozva a maxímum karakter szám,
+        // ezért ezt itt is lekell ellenőrizni, hogy a felhasználó tudja, hogy túl hosszú szöveget adott meg,
+        // ezt jelezni is fogom lehetőségként a view-ban.
         $validatedData = $request->validate([
             'real_estate_id' => 'required',
             'name' => 'required',
-            'description' => 'required',
+            'description' => 'required|max:500',
             'address' => 'required',
             'type_name' => 'required',
             'price' => 'required',
         ]);
-
-
-
+        //elmentem az inputból kinyert adatokat
         $name = $validatedData["name"];
         $description = $validatedData["description"];
         $address = $validatedData["address"];
         $type_name = $validatedData["type_name"];
         $price = $validatedData["price"];
 
-        // real_estate
+        // név alapján megkeresem a hozzátartozó id-t, mivel új fajta háztípust nem tudnak hozzáadni felhasználói
+        // szinten, ezért nem védettem le egyedi névvel, hiszen nem lesz véletlenül se kettő ugyanojan nevű adat
+        // természetesen ha a felhasználó tudna háztípust is megadni, akkor lekellene védetni, de most jó a firstOrFail
+        // lekérdezés is, hogy megkapjuk a type_id-t
         $find_type_id = real_estate_type::where('name', $type_name)->firstOrFail();
 
+        // pédányosítom objektummá a feltöltött adatot, az inputokból nyert adatokkal átírom, és elmentem
         $actualReal_estate = real_estate::findOrFail($validatedData["real_estate_id"]);
         $actualReal_estate->name = $name;
         $actualReal_estate->description = $description;
         $actualReal_estate->address = $address;
         $actualReal_estate->type_id = $find_type_id->id;
         $actualReal_estate->price = floatval($price);
+        $actualReal_estate->price = floatval($price);
         $actualReal_estate->save();
 
-            // real_estate_type
-
-        //$find_type_id = real_estate_type::where('name', $type_name)->firstOrFail();
-        //$type_id = $find_type_id->type_id;
-
-
-
         if($validatedData){
+            // ha sikeres volt, visszaküldöm jelzésképp
             return redirect()->back()->with('success', 'Sikeres módosítás!');
         } else {
-            return redirect()->back()->with('success', 'Sikertelen módosítás!');
+            // eredetileg ez nem fog lefutni, de a biztonság kedvéért írtam egy ilyet is ha a validált adatokkal nem sikerülne a feltöltés
+            return redirect()->back()->with('alert', 'Sikertelen módosítás!');
         }
-
-            //return Redirect::back()->withErrors(['msg' => 'The Message']);
-
-
-        //return view('realestate.details', ['actualRealEstate'=>$actualRealEstate, 'actualRealEstateTypeName'=>$actualRealEstateTypeName->name]);
-
-
-        //return redirect()->back();
-
-        /*$validator = new Validator($request->all(), []);
-        return view("realestate.update", ["request" => $request]);*/
-
     }
     /**
      * @param $id
@@ -199,11 +192,13 @@ class HomeController extends Controller
     public function deleteRealEstate($id)
     {
         $actual_Real_estate = real_estate::findOrFail($id);
-        $actual_Real_estate->delete($id);
+        $actual_Real_estate->delete();
         if($actual_Real_estate){
-            return redirect('/')->with('success', 'Sikeres módosítás!');
+            // törlés után (softDelete-vel), vissza jelzést küldök a felhasználónak
+            return redirect('/')->with('success', 'Sikeres törlés!');
         } else {
-            return redirect('/')->with('success', 'Sikertelen módosítás!');
+            // sikertelen törlés után , vissza jelzést küldök a felhasználónak, elvileg a program jelenlegi állapotában ez sem történhet meg
+            return redirect('/')->with('success', 'Sikertelen törlés!');
         }
     }
 }
