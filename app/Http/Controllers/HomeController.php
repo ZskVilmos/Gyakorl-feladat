@@ -16,15 +16,8 @@ use Symfony\Component\Console\Input\Input;
 
 class HomeController extends Controller
 {
-    /**
-     * Új ház feltöltő felület
-     * Azonosító, teljes cím, ár, ingatlan jelleg
-     * eloqent modell!
-     * https://laravel.com/docs/8.x/eloquent
-     */
     public function createRealEstateMenu()
     {
-
         $realEstateTypeOptions = real_estate_type::all();
         return view('realestate.create',[
             'realEstateTypeOptions' => $realEstateTypeOptions
@@ -75,7 +68,7 @@ class HomeController extends Controller
             $actualReal_estate->address = $address;
             $actualReal_estate->type_id = $find_type_id->id;
             $actualReal_estate->price = floatval($price);
-            $actualReal_estate->img_uri = $filename;
+            $actualReal_estate->img_uri = "images/".$filename;;
             $actualReal_estate->save();
             if(move_uploaded_file($_FILES['file']['tmp_name'], $location)){
                 return redirect()->back()->with('success', 'Sikeres feltöltés!');
@@ -99,9 +92,28 @@ class HomeController extends Controller
         // *2 itt sem szabadna az összeset lekérdezni egyszerre a memória túlcsordulás miatt.
         // De a beugró feladatba nem rakok olyan sok házat, hogy ez bekövetkezzen.
         $realEstatesList = real_estate::all();
-
+        $realEstatesListTypes = real_estate_type::all();
         return view('realestate.index', [
             'real_estate' => $realEstatesList,
+            'real_estate_type' => $realEstatesListTypes,
+        ]);
+    }
+
+    public function listRealEstateInType(Request $request)
+    {
+        // *2 itt sem szabadna az összeset lekérdezni egyszerre a memória túlcsordulás miatt.
+        // De a beugró feladatba nem rakok olyan sok házat, hogy ez bekövetkezzen.
+        $validatedData = $request->validate([
+            'type_id' => 'required',
+        ]);
+        //$find_type_id = real_estate_type::where('name', $type_name)->firstOrFail();
+        $type_id = $validatedData["type_id"];
+        $realEstatesListS = real_estate::where("type_id", $type_id)->get();
+        $realEstatesListTypesS = real_estate_type::all();
+
+        return view('realestate.index', [
+            'real_estate' => $realEstatesListS,
+            'real_estate_type' => $realEstatesListTypesS,
         ]);
     }
 

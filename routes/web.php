@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 // itt jelennek meg a feltöltött házak
 Route::get('/', [App\Http\Controllers\HomeController::class, 'listRealEstate'] );
 
+
 // készítés menűje
 Route::get('/create-real-estate', [App\Http\Controllers\HomeController::class, 'createRealEstateMenu'] );
 
@@ -33,3 +34,8 @@ Route::post('/update-real-estate', [App\Http\Controllers\HomeController::class, 
 
 // ezzel lehet törölni az aktuális házat
 Route::get('/delete-real-estate/{id}', [App\Http\Controllers\HomeController::class, 'deleteRealEstate'] );
+
+// itt lehet majd választani a típus közül, ebben a controllerben leghátra kell rakni,
+// mert ha előrébb raknám, akkor lenne olyan veblap ami nem működne
+Route::POST('/list-Real-Estate-In-Type', [App\Http\Controllers\HomeController::class, 'listRealEstateInType'] );
+

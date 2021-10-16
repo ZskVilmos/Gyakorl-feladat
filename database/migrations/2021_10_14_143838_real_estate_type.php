@@ -20,14 +20,15 @@ class RealEstateType extends Migration
         });
 
         DB::statement("
-            insert into real_estate_type (name, description) values ('House', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec cursus massa tellus, lobortis fringilla sapien condimentum in. Aenean neque massa, porttitor ac vestibulum vitae, rhoncus in nunc. Donec odio velit, dapibus et augue eget, pharetra facilisis quam.');
+            insert into real_estate_type (name, description) values ('Ház', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec cursus massa tellus, lobortis fringilla sapien condimentum in. Aenean neque massa, porttitor ac vestibulum vitae, rhoncus in nunc. Donec odio velit, dapibus et augue eget, pharetra facilisis quam.');
         ");
         DB::statement("
-            insert into real_estate_type (name, description) values ('Apartment', 'Sed id dignissim leo. Quisque eleifend magna odio, ut porttitor mi facilisis sit amet. Praesent nisl leo, faucibus at tempor eu, viverra non lorem. Duis id porttitor lorem. In convallis, nisi at lobortis vehicula, ipsum ligula congue nulla, eleifend gravida elit justo ut mi. ');
+            insert into real_estate_type (name, description) values ('Apartman', 'Sed id dignissim leo. Quisque eleifend magna odio, ut porttitor mi facilisis sit amet. Praesent nisl leo, faucibus at tempor eu, viverra non lorem. Duis id porttitor lorem. In convallis, nisi at lobortis vehicula, ipsum ligula congue nulla, eleifend gravida elit justo ut mi. ');
         ");
         DB::statement("
-            insert into real_estate_type (name, description) values ('Hut', 'Integer fringilla nisl quis aliquam finibus. Vestibulum varius non dolor eu fringilla. Integer non feugiat magna. Maecenas est urna, elementum sit amet suscipit et, placerat sed metus.');
+            insert into real_estate_type (name, description) values ('Kunyhó', 'Integer fringilla nisl quis aliquam finibus. Vestibulum varius non dolor eu fringilla. Integer non feugiat magna. Maecenas est urna, elementum sit amet suscipit et, placerat sed metus.');
         ");
+
 
     }
 

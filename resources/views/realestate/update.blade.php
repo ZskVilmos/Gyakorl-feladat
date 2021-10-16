@@ -3,8 +3,17 @@
 @section('content')
     <div class="container">
         <div class="jumbotron">
+
+            <!-- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ----------  -->
+
             <a class="btn btn-primary" href="/">Vissza</a>
+
+            <!-- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ----------  -->
+
             <h3 class="text-center">Ingatlan részleteinek megváltoztatása </h3>
+
+            <!-- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ----------  -->
+
             @if (\Session::has('success'))
                 <div class="alert alert-success">
                     <ul>
@@ -12,6 +21,9 @@
                     </ul>
                 </div>
             @endif
+
+        <!-- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ----------  -->
+
             @if (\Session::has('alert'))
                 <div class="alert alert-danger">
                     <ul>
@@ -19,6 +31,9 @@
                     </ul>
                 </div>
             @endif
+
+        <!-- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ----------  -->
+
             <form class="form-group" action="/update-real-estate" method="POST">
                 @csrf
                 <input type="hidden" name="real_estate_id" value="{{ $actualRealEstate->id }}">
@@ -42,12 +57,15 @@
                         @endforeach
                     </select>
                     </p>
-                <div class="row mb-3">
-                    <div class="col-11">Ár: <input class="form-control" type="number" name="price" value="{{intval($actualRealEstate->price)}}"></div><div class="col-1 mt-4 pt-2">ft.</div>
-                </div>
+                    <div class="input-group">
+                        <span class="input-group-addon mt-2 mr-2">Ár:</span><input class="form-control" type="number" name="price" value="{{intval($actualRealEstate->price)}}"><span class="input-group-addon mt-2 ml-2">ft.</span>
+                    </div>
                 <p class="text-danger">@error('price') {{"Ár megadása kötelező!"}} @enderror</p>
                 <input class="form-control btn btn-primary" type="submit" value="Módosítás" name="submit">
             </form>
+
+            <!-- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ----------  -->
+
         </div>
     </div>
 @endsection

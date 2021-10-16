@@ -9,8 +9,17 @@ Created at: 2021.03.24.
 @section('content')
     <div class="container">
         <div class="jumbotron">
+
+            <!-- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ----------  -->
+
             <a class="btn btn-primary" href="/">Vissza</a>
+
+            <!-- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ----------  -->
+
             <h3 class="text-center">Ingatlan részletek</h3>
+
+            <!-- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ----------  -->
+
             <form action="/update-real-estate/{{$actualRealEstate->id}}" method="GET">
                 @csrf
                 <h4>Ház neve: {{ $actualRealEstate->name }}</h4>
@@ -23,14 +32,19 @@ Created at: 2021.03.24.
                                     @else
                                         {{$actualRealEstate->updated_at}}
                                     @endif</p>
-                <p>Ár {{intval($actualRealEstate->price)}} ft</p>
-
-                <input type="submit" value="Módosítás">
+                <p>Ár {{intval($actualRealEstate->price)}} ft.</p>
+                <input class="btn btn-primary" type="submit" value="Módosítás">
             </form>
+
+            <!-- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ----------  -->
+
             <form action="/delete-real-estate/{{$actualRealEstate->id}}" method="GET">
                 @csrf
-                <input type="submit" value="Törlés">
+                <button class="btn btn-danger mt-4" type="submit" onclick="return confirm('Biztos hogy törölni akarod?')">Törlés </button>
             </form>
+
+            <!-- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ----------  -->
+
         </div>
     </div>
 @endsection
