@@ -13,6 +13,7 @@ Created at: 2021.03.24.
             <div class="row d-flex align-items-center">
                 @foreach($real_estate as $realEstate)
                     <form class="col-12 col-md-6" action="/get-real-estate/{{$realEstate->id}}" method="GET">
+                        @csrf
                         <div class="p-3 rounded">
                             <div class="d-flex justify-content-center ">
                                 <img class="img-fluid w-100 h-50 rounded" src="{{ $realEstate->img_uri }}"  alt="vizuális grafikai elem"> <br>

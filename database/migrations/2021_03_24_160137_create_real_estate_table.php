@@ -47,7 +47,7 @@ class CreateRealEstateTable extends Migration
         ");
 
         DB::statement("
-            insert into real_estate (name,img_uri, description, address,price,type_id, created_at) values ('zoldfulu', '/images/zoldfulu:PNG', 'A Lorem Ipsum egy egyszerû szövegrészlete, szövegutánzata a betûszedõ és nyomdaiparnak. A Lorem Ipsum az 1500-as évek óta standard szövegrészletként szolgált az iparban; mikor egy ismeretlen nyomdász összeállította a betûkészletét és egy példa-könyvet vagy szöveget nyomott papírra, ezt használta. Nem csak 5 évszázadot élt túl, de az elektronikus betûkészleteknél is változatlanul megmaradt. ', 'Fenékpuszta Erzsébet tér 67.', 2345629742, 3, CURRENT_TIMESTAMP );
+            insert into real_estate (name,img_uri, description, address,price,type_id, created_at) values ('zoldfulu', '/images/zoldfulu.PNG', 'A Lorem Ipsum egy egyszerû szövegrészlete, szövegutánzata a betûszedõ és nyomdaiparnak. A Lorem Ipsum az 1500-as évek óta standard szövegrészletként szolgált az iparban; mikor egy ismeretlen nyomdász összeállította a betûkészletét és egy példa-könyvet vagy szöveget nyomott papírra, ezt használta. Nem csak 5 évszázadot élt túl, de az elektronikus betûkészleteknél is változatlanul megmaradt. ', 'Fenékpuszta Erzsébet tér 67.', 2345629742, 3, CURRENT_TIMESTAMP );
         ");
     }
 
