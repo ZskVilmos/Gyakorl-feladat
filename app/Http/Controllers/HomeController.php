@@ -96,6 +96,7 @@ class HomeController extends Controller
         return view('realestate.index', [
             'real_estate' => $realEstatesList,
             'real_estate_type' => $realEstatesListTypes,
+            'selected_type_id' => 1,
         ]);
     }
 
